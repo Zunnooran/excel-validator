@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import ChatBot from "../components/ChatBot";
 
 const Section = () => {
   return (
@@ -15,7 +16,8 @@ const Section = () => {
               height: 240,
             }}
           >
-            <p>Display Something</p>
+            <ChatBot />
+            {/* <p>Display Something</p> */}
           </Paper>
         </Grid>
         <Grid item xs={12} md={4} lg={3}>

@@ -27,7 +27,7 @@ const SideBar = ({ toggleDrawer, open }) => {
           <h4>option 2</h4>
           <h4>option 3</h4>
           <Divider sx={{ my: 1 }} />
-          <h4>other Options</h4>
+          <h4>Chat Bot</h4>
         </List>
       </Drawer>
     </>
