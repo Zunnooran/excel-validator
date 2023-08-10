@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChatFeed, Message } from 'react-chat-ui';
 import { TextField, Button, Paper } from '@mui/material';
+import TestFile from '../../src/assets/files/test.txt'; // Import the test.txt file from the assets folder
 
 const AiChatBot = () => {
   const [userInput, setUserInput] = useState('');
@@ -17,7 +18,7 @@ const AiChatBot = () => {
     },
     {
       keywords: ['sql query', 'configuration', 'workbook', 'analysis'],
-      answer: "Here we go\nfile1",
+      answer: "Here we go\nfile:test.txt\nHope this was Helpful!",
     },
     {
       keywords: ['no'],
@@ -33,11 +34,14 @@ const AiChatBot = () => {
     },
     {
       keywords: ['situation','explain'],
-      answer:"you purchased %item at 10$ and 5 item at 20$ and you have a standard cost defined for item X is $8 now you have to order for 10 quantities at what price you will sell it.1. at standard cost defined $8 2.at $10 dollars which was received first 3. at $20 which was received later 4. at avg cost of $15",
+      answer:`you purchased %item at 10$ and 5 item at 20$ and you have a standard cost defined for item X is $8 now you have to order for 10 quantities at what price you will sell it.
+              1. at standard cost defined $8 
+              2.at $10 dollars which was received first 
+              3. at $20 which was received later 4. at avg cost of $15`,
     },
     {
       keywords: ['lot','ship','price'],
-      answer: "1. FIFO 2. Average Cost 3. LIFO-Oracle  Don't Support as of today",
+      answer: "1. FIFO \n2. Average Cost \n3. LIFO-Oracle  Don't Support as of today",
     },
     {
       keywords: ['resource','rate'],
@@ -45,7 +49,7 @@ const AiChatBot = () => {
     },
     {
       keywords: ['configuration','template'],
-      answer: "Here You go\ntemplate",
+      answer: "Here You go\n\nfile:test.txt\nHope this was Helpful!",
     },
     {
       answer: "Hope this was helpful",
@@ -70,6 +74,8 @@ const AiChatBot = () => {
       answer: "Find below sample Purchasing OTBI Reports",
     },
   ];
+
+  
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -106,7 +112,19 @@ const AiChatBot = () => {
       response = "I'm sorry, I didn't understand that.";
     }
 
-    const botMessage = new Message({ id: 1, message: response });
+    const formattedResponse = response.split('\n').map((line, index) => {
+      if (line.startsWith('file:')) {
+        const fileName = line.replace('file:', '').trim();
+        return (
+          <a key={index} href={TestFile} download>
+            Download File
+          </a>
+        );
+      }
+      return <p key={index}>{line}</p>;
+    });
+
+    const botMessage = new Message({ id: 1, message: formattedResponse });
     setMessages((prevMessages) => [...prevMessages, botMessage]);
   };
 
@@ -138,8 +156,7 @@ const AiChatBot = () => {
             message: message.message,
           }))}
           isTyping={false}
-          bubbleStyles={{ text: { fontSize: 14,
-            color: '#333',} }}
+          bubbleStyles={{ text: { fontSize: 14, color: '#333' } }}
         />
       </Paper>
       <div style={{ display: 'flex', gap: '8px', padding: '16px' }}>
@@ -166,3 +183,4 @@ const AiChatBot = () => {
 };
 
 export default AiChatBot;
+

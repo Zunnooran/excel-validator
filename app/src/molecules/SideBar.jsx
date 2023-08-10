@@ -28,14 +28,14 @@ const SideBar = ({ toggleDrawer, open }) => {
 
       <List>
         <ListItem button>
-          <ListItemText primary="Option 1" />
+          <ListItemText primary="Excel Validator" />
         </ListItem>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemText primary="Option 2" />
         </ListItem>
         <ListItem button>
           <ListItemText primary="Option 3" />
-        </ListItem>
+        </ListItem> */}
       </List>
 
       <Divider />
