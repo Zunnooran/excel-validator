@@ -3,6 +3,9 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // import Brightness4Icon from "@mui/icons-material/Brightness4";
 // import Brightness7Icon from "@mui/icons-material/Brightness7";
 
@@ -62,16 +65,15 @@ const AppBarMolecule = ({
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <IconButton onClick={handleThemeToggle} color="inherit">
-              {currentTheme !== "dark" ? (
-
-                <p>light</p>
-              ) : (
-                <p>dark</p>
-
-              )}
-            </IconButton>
+          <IconButton onClick={handleThemeToggle} color="inherit">
+            {currentTheme !== "dark" ? (
+              <FontAwesomeIcon icon={faSun} /> 
+            ) : (
+              <FontAwesomeIcon icon={faMoon} /> 
+            )}
           </IconButton>
+        </IconButton>
+        
         </Toolbar>
       </AppBar>
     </>

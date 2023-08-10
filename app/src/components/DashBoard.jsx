@@ -24,7 +24,7 @@ function Copyright(props) {
 
 
 export default function Dashboard({ currentTheme, handleThemeToggle }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -59,10 +59,10 @@ export default function Dashboard({ currentTheme, handleThemeToggle }) {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Section />
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
-      </Box>
+            </Container>
+            </Box>
+            </Box>
+            <Copyright/>
     </>
   );
 }
