@@ -43,6 +43,32 @@ const AiChatBot = () => {
       keywords: ['resource','rate'],
       answer: "regularly",
     },
+    {
+      keywords: ['configuration','template'],
+      answer: "Here You go\ntemplate",
+    },
+    {
+      answer: "Hope this was helpful",
+    },
+    {
+      keywords: ['yes'],
+      answer: "Let us Know,If you have any further questions!",
+    },
+    {
+      keywords: ['purchase','report','orders'],
+      answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report",
+    },
+    {
+      answer: "Hope this was helpful",
+    },
+    {
+      keywords: ['yes'],
+      answer: "Are you looking for OTBI Reports",
+    },
+    {
+      keywords: ['yes'],
+      answer: "Find below sample Purchasing OTBI Reports",
+    },
   ];
 
   useEffect(() => {
