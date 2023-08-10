@@ -1,43 +1,44 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import ChatBot from "../components/ChatBot";
+// import Grid from "@mui/material/Grid";
+// import Paper from "@mui/material/Paper";
+import AiChatBot from "../components/AiChatBot";
 
 const Section = () => {
+   // <Grid container spacing={3}>
+      //   <Grid item xs={12} md={8} lg={9}>
+      //     <Paper
+      //       sx={{
+      //         p: 2,
+      //         display: "flex",
+      //         flexDirection: "column",
+      //         height: 240,
+      //       }}
+      //     >
+          // <p>Display Something</p>
+          // </Paper>
+        // </Grid>
+      //   <Grid item xs={12} md={4} lg={3}>
+      //     <Paper
+      //       sx={{
+      //         p: 2,
+      //         display: "flex",
+      //         flexDirection: "column",
+      //         height: 240,
+      //       }}
+      //     >
+      //       <p>another box </p>
+      //     </Paper>
+      //   </Grid >
+      //   <Grid item xs={12}>
+      //     <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+      //       <p>Display anything if u want</p>
+      //     </Paper>
+      //   </Grid>
+      // </Grid>
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8} lg={9}>
-          <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-            }}
-          >
-            <ChatBot />
-            {/* <p>Display Something</p> */}
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4} lg={3}>
-          <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-            }}
-          >
-            <p>another box </p>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <p>Display anything if u want</p>
-          </Paper>
-        </Grid>
-      </Grid>
+      <AiChatBot />
+     
     </>
   );
 };
