@@ -3,6 +3,13 @@ import { ChatFeed, Message } from 'react-chat-ui';
 import { TextField, Button, Paper } from '@mui/material';
 
 const AiChatBot = () => {
+  const bubbleStyles = {
+    text: {
+      fontSize: 16,
+      borderRadius: 8,
+      color: '#333',
+    },
+  };
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [initialMessage, setinitialMessage] = useState(false);
@@ -143,8 +150,7 @@ const AiChatBot = () => {
             id: message.id,
             message: message.message
           }))}
-          isTyping={false}
-          bubbleStyles={{ text: { fontSize: 14 } }}
+          bubbleStyles={bubbleStyles}
         />
       </Paper>
       <div style={{ display: 'flex', gap: '8px', padding: '16px' }}>

@@ -1,37 +1,52 @@
 import Drawer from "../atom/Drawer";
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SideBar = ({ toggleDrawer, open }) => {
   return (
-    <>
-      <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            px: [1],
-          }}
-        >
-          <IconButton onClick={toggleDrawer}>
-            <p>x</p>         
-          </IconButton>
-       
-        <List>
-          <h4>option 1</h4>
-          <h4>option 2</h4>
-          <h4>option 3</h4>
-          <Divider sx={{ my: 1 }} />
-          <h4>Chat Bot</h4>
-        </List>
-        </Toolbar>
-        <Divider />
-      </Drawer>
-    </>
+    open ? (
+    <Drawer variant="permanent" open={open}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          px: [1],
+        }}
+      >
+        <IconButton onClick={toggleDrawer}>
+        <FontAwesomeIcon icon={faTimes} />
+        </IconButton>
+      </Toolbar>
+      <Divider />
+
+      <List>
+        <ListItem button>
+          <ListItemText primary="Option 1" />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Option 2" />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Option 3" />
+        </ListItem>
+      </List>
+
+      <Divider />
+
+      <List>
+        <ListItem button>
+          <ListItemText primary="Chat Bot" />
+        </ListItem>
+      </List>
+    </Drawer>
+        ) : null
   );
 };
 
