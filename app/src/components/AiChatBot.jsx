@@ -26,6 +26,30 @@ const AiChatBot = () => {
       keywords: ['sql query', 'configuration', 'workbook', 'analysis'],
       answer: "Here we go\nfile1",
     },
+    {
+      keywords: ['no'],
+      answer: "Let us Know,If you have any further questions!",
+    },
+    {
+      keywords: ['inventory'],
+      answer: "1. Actuals FIFO-Sum of the Purchased Cost \n 2. Standard Cost \n 3.Average Cost'",
+    },
+    {
+      keywords: ['item',"cost"],
+      answer: "regularly,quarterly,monthly,yearly",
+    },
+    {
+      keywords: ['situation','explain'],
+      answer:"you purchased %item at 10$ and 5 item at 20$ and you have a standard cost defined for item X is $8 now you have to order for 10 quantities at what price you will sell it.1. at standard cost defined $8 2.at $10 dollars which was received first 3. at $20 which was received later 4. at avg cost of $15",
+    },
+    {
+      keywords: ['lot','ship','price'],
+      answer: "1. FIFO 2. Average Cost 3. LIFO-Oracle  Don't Support as of today",
+    },
+    {
+      keywords: ['resource','rate'],
+      answer: "regularly",
+    },
   ];
 
   useEffect(() => {
