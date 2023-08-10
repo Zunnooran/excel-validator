@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+// import Brightness4Icon from "@mui/icons-material/Brightness4";
+// import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const drawerWidth = 240;
 
@@ -37,7 +37,7 @@ const AppBarMolecule = ({
       <AppBar position="absolute" open={open}>
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "0px", // keep right padding when drawer closed
           }}
         >
           <IconButton
@@ -64,9 +64,11 @@ const AppBarMolecule = ({
           <IconButton color="inherit">
             <IconButton onClick={handleThemeToggle} color="inherit">
               {currentTheme !== "dark" ? (
-                <Brightness7Icon />
+
+                <p>light</p>
               ) : (
-                <Brightness4Icon />
+                <p>dark</p>
+
               )}
             </IconButton>
           </IconButton>

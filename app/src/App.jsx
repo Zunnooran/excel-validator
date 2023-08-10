@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/dashboard";
+import Dashboard from "./components/DashBoard";
 import NoRoute from "./pages/NoRoute";
-import ChatBot from "./components/ChatBot";
+import AiChatBot from "./components/AiChatBot";
 
 const API_KEY = "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";
 

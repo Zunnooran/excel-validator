@@ -3,7 +3,7 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const SideBar = ({ toggleDrawer, open }) => {
   return (
@@ -18,17 +18,18 @@ const SideBar = ({ toggleDrawer, open }) => {
           }}
         >
           <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
+            <p>x</p>         
           </IconButton>
-        </Toolbar>
-        <Divider />
-        <List component="nav">
+       
+        <List>
           <h4>option 1</h4>
           <h4>option 2</h4>
           <h4>option 3</h4>
           <Divider sx={{ my: 1 }} />
           <h4>Chat Bot</h4>
         </List>
+        </Toolbar>
+        <Divider />
       </Drawer>
     </>
   );
