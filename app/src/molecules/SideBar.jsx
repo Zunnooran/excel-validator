@@ -5,6 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SideBar = ({ toggleDrawer, open }) => {
   return (
@@ -19,7 +21,7 @@ const SideBar = ({ toggleDrawer, open }) => {
         }}
       >
         <IconButton onClick={toggleDrawer}>
-         X
+        <FontAwesomeIcon icon={faTimes} />
         </IconButton>
       </Toolbar>
       <Divider />

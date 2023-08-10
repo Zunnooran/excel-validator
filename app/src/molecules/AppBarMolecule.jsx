@@ -57,6 +57,8 @@ const AppBarMolecule = ({
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
+            fontWeight="bold"
+            fontFamily="sans-serif"
           >
             Dashboard
           </Typography>
