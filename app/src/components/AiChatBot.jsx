@@ -112,7 +112,8 @@ const AiChatBot = () => {
             message: message.message,
           }))}
           isTyping={false}
-          bubbleStyles={{ text: { fontSize: 14 } }}
+          bubbleStyles={{ text: { fontSize: 14,
+            color: '#333',} }}
         />
       </Paper>
       <div style={{ display: 'flex', gap: '8px', padding: '16px' }}>
