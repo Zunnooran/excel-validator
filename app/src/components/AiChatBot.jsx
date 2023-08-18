@@ -69,17 +69,14 @@ const AiChatBot = () => {
 
   const orders = [{
     keywords: ['purchase', 'report', 'orders'],
-    answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report",
-  },
-  {
-    answer: "Hope this was helpful",
+    answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report \n Hope this was helpful",
   },
   {
     keywords: ['yes'],
     answer: "Are you looking for OTBI Reports",
   },
   {
-    keywords: ['yes'],
+    keywords: ['ok', 'yes'],
     answer: "Find below sample Purchasing OTBI Reports",
   },]
 
@@ -133,7 +130,7 @@ const AiChatBot = () => {
       }else if(userInputLowerCase.includes('configuration') || userInputLowerCase.includes('template')){
         setSelectedCase(configuration);
         answer = configuration
-      }else if(userInputLowerCase.includes('orders') || userInputLowerCase.includes('report') || userInputLowerCase.includes('reppurchaseort')){
+      }else if(userInputLowerCase.includes('orders') || userInputLowerCase.includes('report') || userInputLowerCase.includes('purchase')){
         setSelectedCase(orders);
         answer = orders
       }else if(userInputLowerCase.includes('carriers') || userInputLowerCase.includes('dff')){
@@ -157,7 +154,7 @@ const AiChatBot = () => {
         for (const scenario of answer) {
           if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
             response = scenario.answer;
-            if (response === 'Let us Know,If you have any further questions!') {
+            if (response === 'Let us Know,If you have any further questions!' || response === "Find below sample Purchasing OTBI Reports") {
               answer = []
             }
             break
