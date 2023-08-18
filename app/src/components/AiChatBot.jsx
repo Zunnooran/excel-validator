@@ -6,14 +6,14 @@ import TestFile from '../../src/assets/files/test.txt'; // Import the test.txt f
 const AiChatBot = () => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
-
+  const [selectedScenerios, setselectedScenerios] = useState([])
   const scenarios = [
-    {
+    [{
       keywords: ['onhand'],
       answer: "Are you looking for 'Manage Item Quantities?",
     },
     {
-      keywords: ['yes', 'ok'],
+      keywords: ['yes'],
       answer: "1. SQL Query\n2. Configuration Workbook\n3. Analysis",
     },
     {
@@ -21,34 +21,38 @@ const AiChatBot = () => {
       answer: "Here we go\nfile:test.txt\nHope this was Helpful!",
     },
     {
-      keywords: ['no'],
+      keywords: ['no','yeah'],
       answer: "Let us Know,If you have any further questions!",
-    },
-    {
+    },],
+    [{
       keywords: ['inventory'],
       answer: "1. Actuals FIFO-Sum of the Purchased Cost \n 2. Standard Cost \n 3.Average Cost'",
     },
     {
-      keywords: ['item',"cost"],
+      keywords: ['item', "cost"],
       answer: "regularly,quarterly,monthly,yearly",
     },
     {
-      keywords: ['situation','explain'],
-      answer:`you purchased %item at 10$ and 5 item at 20$ and you have a standard cost defined for item X is $8 now you have to order for 10 quantities at what price you will sell it.
+      keywords: ['situation', 'explain'],
+      answer: `you purchased %item at 10$ and 5 item at 20$ and you have a standard cost defined for item X is $8 now you have to order for 10 quantities at what price you will sell it.
               1. at standard cost defined $8 
               2.at $10 dollars which was received first 
               3. at $20 which was received later 4. at avg cost of $15`,
     },
     {
-      keywords: ['lot','ship','price'],
+      keywords: ['lot', 'ship', 'price'],
       answer: "1. FIFO \n2. Average Cost \n3. LIFO-Oracle  Don't Support as of today",
     },
     {
-      keywords: ['resource','rate'],
+      keywords: ['resource', 'rate'],
       answer: "regularly",
     },
     {
-      keywords: ['configuration','template'],
+      keywords: [ 'ok'],
+      answer: "Let us Know,If you have any further questions!",
+    }],
+    [{
+      keywords: ['configuration', 'template'],
       answer: "Here You go\n\nfile:test.txt\nHope this was Helpful!",
     },
     {
@@ -57,9 +61,9 @@ const AiChatBot = () => {
     {
       keywords: ['yes'],
       answer: "Let us Know,If you have any further questions!",
-    },
-    {
-      keywords: ['purchase','report','orders'],
+    },],
+    [{
+      keywords: ['purchase', 'report', 'orders'],
       answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report",
     },
     {
@@ -72,11 +76,20 @@ const AiChatBot = () => {
     {
       keywords: ['yes'],
       answer: "Find below sample Purchasing OTBI Reports",
+    },],
+    [{
+      keywords: ['carriers', 'dff'],
+      answer: "Carriers DFF are available under Manage carriers Descriptive Flexfields. There are 6 FlexFields \n Carrier \n Carrier organization \n Define Unit of measure \n SCM Common UOM Global Flexfield \n Transit Time\n Unit of measure classes ",
     },
+    {
+      keywords: ['ok'],
+      answer: "Hope this was helpful",
+    },
+    {
+      keywords: ['yes', 'yeah'],
+      answer: "Let us Know,If you have any further questions!",
+    },],
   ];
-
-  
-
   useEffect(() => {
     if (messages.length === 0) {
       const initialBotMessage = new Message({
@@ -100,16 +113,39 @@ const AiChatBot = () => {
   const handleBotResponse = (userInput) => {
     const userInputLowerCase = userInput.toLowerCase();
     let response = '';
-
-    for (const scenario of scenarios) {
-      if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
-        response = scenario.answer;
-        break;
+    if (selectedScenerios.length === 0) {
+      for (const selectedArray of scenarios) {
+        for (const scenario of selectedArray) {
+          if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
+            response = scenario.answer;
+            console.log(response)
+            console.log(typeof selectedScenerios)
+            setselectedScenerios(selectedArray);
+            console.log(selectedScenerios, "select scenerio first")
+            break;
+          }
+        }
       }
+    }
+    if (selectedScenerios.length > 0) {
+      for (const scenario of selectedScenerios) {
+        console.log(selectedScenerios, "after selecting scenerio ")
+        if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
+          response = scenario.answer;
+          if (response==='Let us Know,If you have any further questions!') {
+            setselectedScenerios([])
+          }
+          break
+        }
+      }
+      // else {
+      //   response = "I can't help you with that question";
+      // }
     }
 
     if (!response) {
       response = "I'm sorry, I didn't understand that.";
+
     }
 
     const formattedResponse = response.split('\n').map((line, index) => {
