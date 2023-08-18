@@ -1,36 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ChatFeed, Message } from 'react-chat-ui';
 import { TextField, Button, Paper } from '@mui/material';
-import TestFile from '../../src/assets/files/test.txt'; // Import the test.txt file from the assets folder
+import TestFile from '../../src/assets/files/test.txt';
 
 const AiChatBot = () => {
   const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
-  const [selectedScenerios, setselectedScenerios] = useState([])
-  const scenarios = [
-    [{
-      keywords: ['onhand'],
-      answer: "Are you looking for 'Manage Item Quantities?",
-    },
+  const [selectedCase, setSelectedCase] = useState([])
+  const inventory = [
     {
-      keywords: ['yes'],
-      answer: "1. SQL Query\n2. Configuration Workbook\n3. Analysis",
-    },
-    {
-      keywords: ['sql query', 'configuration', 'workbook', 'analysis'],
-      answer: "Here we go\nfile:test.txt\nHope this was Helpful!",
-    },
-    {
-      keywords: ['no','yeah'],
-      answer: "Let us Know,If you have any further questions!",
-    },],
-    [{
       keywords: ['inventory'],
       answer: "1. Actuals FIFO-Sum of the Purchased Cost \n 2. Standard Cost \n 3.Average Cost'",
     },
     {
       keywords: ['item', "cost"],
-      answer: "regularly,quarterly,monthly,yearly",
+      answer: "1. regularly \n 2. quarterly \n 3. monthly \n 4. yearly",
     },
     {
       keywords: ['situation', 'explain'],
@@ -50,46 +34,68 @@ const AiChatBot = () => {
     {
       keywords: [ 'ok'],
       answer: "Let us Know,If you have any further questions!",
-    }],
-    [{
-      keywords: ['configuration', 'template'],
-      answer: "Here You go\n\nfile:test.txt\nHope this was Helpful!",
-    },
+    }
+  ]
+  const onhand = [
     {
-      answer: "Hope this was helpful",
+      keywords: ['onhand'],
+      answer: "Are you looking for 'Manage Item Quantities?",
     },
     {
       keywords: ['yes'],
+      answer: "1. SQL Query\n2. Configuration Workbook\n3. Analysis",
+    },
+    {
+      keywords: ['sql query', 'configuration', 'workbook', 'analysis'],
+      answer: "Here we go\nfile:test.txt\nHope this was Helpful!",
+    },
+    {
+      keywords: ['no','yeah'],
       answer: "Let us Know,If you have any further questions!",
-    },],
-    [{
-      keywords: ['purchase', 'report', 'orders'],
-      answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report",
     },
-    {
-      answer: "Hope this was helpful",
-    },
-    {
-      keywords: ['yes'],
-      answer: "Are you looking for OTBI Reports",
-    },
-    {
-      keywords: ['yes'],
-      answer: "Find below sample Purchasing OTBI Reports",
-    },],
-    [{
-      keywords: ['carriers', 'dff'],
-      answer: "Carriers DFF are available under Manage carriers Descriptive Flexfields. There are 6 FlexFields \n Carrier \n Carrier organization \n Define Unit of measure \n SCM Common UOM Global Flexfield \n Transit Time\n Unit of measure classes ",
-    },
-    {
-      keywords: ['ok'],
-      answer: "Hope this was helpful",
-    },
-    {
-      keywords: ['yes', 'yeah'],
-      answer: "Let us Know,If you have any further questions!",
-    },],
-  ];
+  ]
+
+  const configuration = [{
+    keywords: ['configuration', 'template'],
+    answer: "Here You go\n\nfile:test.txt\nHope this was Helpful!",
+  },
+  // {
+  //   answer: "Hope this was helpful",
+  // },
+  {
+    keywords: ['yes'],
+    answer: "Let us Know,If you have any further questions!",
+  },]
+
+  const orders = [{
+    keywords: ['purchase', 'report', 'orders'],
+    answer: "Purchase Order Detail Report,PO Open Purchase Orders Report(by Cost Center),Spend Analysis,Supplier Report",
+  },
+  {
+    answer: "Hope this was helpful",
+  },
+  {
+    keywords: ['yes'],
+    answer: "Are you looking for OTBI Reports",
+  },
+  {
+    keywords: ['yes'],
+    answer: "Find below sample Purchasing OTBI Reports",
+  },]
+
+  const carriers = [{
+    keywords: ['carriers', 'dff'],
+    answer: "Carriers DFF are available under Manage carriers Descriptive Flexfields. There are 6 FlexFields \n Carrier \n Carrier organization \n Define Unit of measure \n SCM Common UOM Global Flexfield \n Transit Time\n Unit of measure classes ",
+  },
+  {
+    keywords: ['ok'],
+    answer: "Hope this was helpful",
+  },
+  {
+    keywords: ['yes', 'yeah'],
+    answer: "Let us Know,If you have any further questions!",
+  },]
+
   useEffect(() => {
     if (messages.length === 0) {
       const initialBotMessage = new Message({
@@ -99,9 +105,11 @@ const AiChatBot = () => {
       setMessages([initialBotMessage]);
     }
   }, []);
+  
 
   const handleUserInput = () => {
-    if (userInput.trim() !== '') {
+    if (userInput.trim() !== '') 
+    {
       const userMessage = new Message({ id: 0, message: userInput });
       setMessages((prevMessages) => [...prevMessages, userMessage]);
 
@@ -110,38 +118,52 @@ const AiChatBot = () => {
     }
   };
 
+  let answer = [];
+
   const handleBotResponse = (userInput) => {
     const userInputLowerCase = userInput.toLowerCase();
     let response = '';
-    if (selectedScenerios.length === 0) {
-      for (const selectedArray of scenarios) {
-        for (const scenario of selectedArray) {
-          if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
-            response = scenario.answer;
-            console.log(response)
-            console.log(typeof selectedScenerios)
-            setselectedScenerios(selectedArray);
-            console.log(selectedScenerios, "select scenerio first")
-            break;
-          }
-        }
+    if (selectedCase.length === 0) {
+      if( userInputLowerCase.includes('inventory')){
+        setSelectedCase(inventory);
+        answer = inventory
+      }else if(userInputLowerCase.includes('onhand')){
+        setSelectedCase(onhand);
+        answer = onhand
+      }else if(userInputLowerCase.includes('configuration') || userInputLowerCase.includes('template')){
+        setSelectedCase(configuration);
+        answer = configuration
+      }else if(userInputLowerCase.includes('orders') || userInputLowerCase.includes('report') || userInputLowerCase.includes('reppurchaseort')){
+        setSelectedCase(orders);
+        answer = orders
+      }else if(userInputLowerCase.includes('carriers') || userInputLowerCase.includes('dff')){
+        setSelectedCase(carriers);
+        answer = carriers
       }
     }
-    if (selectedScenerios.length > 0) {
-      for (const scenario of selectedScenerios) {
-        console.log(selectedScenerios, "after selecting scenerio ")
+    if (selectedCase.length > 0 ) {
+      for (const scenario of selectedCase) {
         if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
           response = scenario.answer;
-          if (response==='Let us Know,If you have any further questions!') {
-            setselectedScenerios([])
+          if (response ==='Let us Know,If you have any further questions!') {
+            setSelectedCase([])
           }
           break
         }
       }
-      // else {
-      //   response = "I can't help you with that question";
-      // }
-    }
+      }
+
+      if(answer.length > 0 ){
+        for (const scenario of answer) {
+          if (scenario.keywords.some(keyword => userInputLowerCase.includes(keyword))) {
+            response = scenario.answer;
+            if (response === 'Let us Know,If you have any further questions!') {
+              answer = []
+            }
+            break
+          }
+        }
+      }
 
     if (!response) {
       response = "I'm sorry, I didn't understand that.";
