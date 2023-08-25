@@ -9,7 +9,7 @@ const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})(({ theme, open,title }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -30,6 +30,7 @@ const AppBarMolecule = ({
   open,
   currentTheme,
   handleThemeToggle,
+  title,
 }) => {
   return (
     <>
@@ -60,7 +61,7 @@ const AppBarMolecule = ({
             fontWeight="bold"
             fontFamily="sans-serif"
           >
-            Dashboard
+            {title}
           </Typography>
           <IconButton color="inherit">
           <IconButton onClick={handleThemeToggle} color="inherit">

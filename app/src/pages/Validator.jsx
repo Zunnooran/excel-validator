@@ -1,9 +1,8 @@
 import * as React from 'react';
 import AppBarMolecule from '../molecules/AppBarMolecule';
 import SideBar from '../molecules/SideBar';
-import Section from '../molecules/Section';
 import { Toolbar, Typography, Box, CssBaseline } from '@mui/material';
-
+import ExcelValidator from '../components/excelvalidator';
 import Container from '@mui/material/Container';
 
 import Link from '@mui/material/Link';
@@ -23,7 +22,7 @@ function Copyright(props) {
 }
 
 
-export default function Dashboard({ currentTheme, handleThemeToggle }) {
+export default function Validator({ currentTheme, handleThemeToggle }) {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -38,7 +37,7 @@ export default function Dashboard({ currentTheme, handleThemeToggle }) {
         currentTheme={currentTheme} 
         handleThemeToggle={handleThemeToggle} 
         open={open} 
-        title={"Dashboard"}
+        title={"Excel Validator"}
         />
         <SideBar
         toggleDrawer={toggleDrawer} 
@@ -58,9 +57,7 @@ export default function Dashboard({ currentTheme, handleThemeToggle }) {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Section />
-            </Container>
+          <ExcelValidator/>
             </Box>
             </Box>
             <Copyright/>
