@@ -1,10 +1,11 @@
 @import url("https://cdn.syncfusion.com/ej2/bootstrap5.css");
 
 .App{
-    margin: 2%;
-   
-    height: calc(100% - 58px);
-  }
+  margin: 2%;
+ 
+  height: calc(100% - 58px);
+}
+
 .primary-btn{
   color: #fff;
   background-color: #6203fc;
@@ -30,4 +31,21 @@
 .Secondary-btn:hover{
   cursor: pointer;
   background-color: #024499;
+}
+.files{
+  display: flex;
+  justify-content: center ;
+  align-items: center;
+}
+.filename{
+  padding: 9px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.options{
+  margin-top: 12px;
+  display: flex;
+ justify-content: flex-end;
+ margin-right: 20px;
 }

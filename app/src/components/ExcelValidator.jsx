@@ -1,6 +1,5 @@
-import React,{useState,useRef } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
-import Swal from 'sweetalert2';
 import {
   RangeDirective,
   RangesDirective,
@@ -14,19 +13,28 @@ import {
   RowsDirective,
   RowDirective,
 } from "@syncfusion/ej2-react-spreadsheet";
+import Swal from 'sweetalert2'
 import "../../App.css";
 
 
 const ExcelValidator = () => {
+  const [multiplefiles, setMultiplefiles] = useState([]);
+  const [filename, setfilename] = useState([])
   const [excelData, setExcelData] = useState(null);
   const [masterExcelFile, setMasterExcelFile] = useState(null);
   const [isViewFile, setIsViewFile] = useState(false);
   const fileInputRef = useRef(null);
   const masterFileInputRef = useRef(null);
+  // useEffect(() => {
+  //   setExcelData(null)
+  //   multiplefiles.push(excelData)
+  // }, [excelData])
 
   const handleFileUpload = (e) => {
     const reader = new FileReader();
     reader.readAsBinaryString(e.target.files[0]);
+    filename.push(e.target.files[0].name)
+    console.log(filename);
     reader.onload = (e) => {
       const data = e.target.result;
       const workbook = XLSX.read(data, { type: "binary" });
@@ -34,7 +42,7 @@ const ExcelValidator = () => {
       const sheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(sheet);
       setExcelData(parsedData);
-      console.log(parsedData[0])
+      multiplefiles.push(parsedData)
       if (parsedData) {
         Swal.fire({
           title: "Success",
@@ -55,9 +63,7 @@ const ExcelValidator = () => {
       const sheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(sheet);
       setMasterExcelFile(parsedData);
-      console.log(parsedData)
       if (parsedData) {
-        console.log("uploaded master")
         Swal.fire({
           title: "Success",
           icon: "success",
@@ -86,10 +92,8 @@ const ExcelValidator = () => {
 
   const handleValidate = async () => {
     if (excelData && masterExcelFile) {
-      console.log(excelData[0],"data")
       const columnCountMasterExcelFile = Object.keys(masterExcelFile[0]).length;
       const columnCountExcelFile = Object.keys(excelData[0]).length;
-    console.log(columnCountExcelFile,columnCountMasterExcelFile)
       if (columnCountExcelFile !== columnCountMasterExcelFile) {
         Swal.fire({
           title: "Columns Not Found",
@@ -108,7 +112,12 @@ const ExcelValidator = () => {
 
     }
   };
-
+  const handleSelectFile = (index) => {
+    const selectedData = multiplefiles[index];
+    setExcelData(selectedData)
+    console.log("Selected Data:", selectedData);
+  };
+  
   const handelView = () => {
     if (excelData) {
       setIsViewFile(true);
@@ -130,22 +139,51 @@ const ExcelValidator = () => {
   const handleButtonClickMaster = () => {
     masterFileInputRef.current.click();
   };
+
   return (
     <div style={{ height: "100vh", marginTop: "2rem" }}>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
-      >
-        <button onClick={handleButtonClick} className="Secondary-btn">
-          File Upload
-        </button>
-        <input
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={handleFileUpload}
-          style={{ display: "none" }}
-          ref={fileInputRef}
-        />
-        <button onClick={handleValidate} className="primary-btn">
+      <div className="allfiles">
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+        >
+          <button onClick={handleButtonClick} className="Secondary-btn">
+            File Upload
+          </button>
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+            ref={fileInputRef}
+          />
+
+          <button onClick={handleButtonClickMaster} className="Secondary-btn">
+            Master File Upload
+          </button>
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileUploadMaster}
+            style={{ display: "none" }}
+            ref={masterFileInputRef}
+          />
+        </div>
+        <hr style={{ marginTop: "1rem" }} />
+        <div className="data">
+        {multiplefiles.length === 0 && (
+          <div className="files">No files uploaded yet</div>
+        )}
+        {multiplefiles.length > 0 && (
+          <div className="uploadedfiles">
+            {multiplefiles.map((data, groupIndex) => (
+              <div key={groupIndex} className="filename">
+              <p>file{groupIndex+1}</p>
+              <button className="Secondary-btn" onClick={() => handleSelectFile(groupIndex)}>Select</button>
+             
+              </div>
+            ))}
+            <div className="options">
+            <button onClick={handleValidate} className="primary-btn">
           Validate
         </button>
         <button
@@ -155,16 +193,10 @@ const ExcelValidator = () => {
         >
           view File
         </button>
-        <button onClick={handleButtonClickMaster} className="Secondary-btn">
-          Master File Upload
-        </button>
-        <input
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={handleFileUploadMaster}
-          style={{ display: "none" }}
-          ref={masterFileInputRef}
-        />
+        </div>
+          </div>
+        )}
+        </div>
       </div>
       {isViewFile && (
         <div className="App">
