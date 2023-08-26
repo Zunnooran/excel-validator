@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppBarMolecule from '../molecules/AppBarMolecule';
 import SideBar from '../molecules/SideBar';
 import { Toolbar, Typography, Box, CssBaseline } from '@mui/material';
-import ExcelValidator from '../components/excelvalidator';
+import ExcelValidator from '../components/ExcelValidator';
 import Container from '@mui/material/Container';
 
 import Link from '@mui/material/Link';

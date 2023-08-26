@@ -14,6 +14,8 @@ import {
   RowDirective,
 } from "@syncfusion/ej2-react-spreadsheet";
 import "../../App.css";
+
+
 const ExcelValidator = () => {
   console.log("inside excel validator")
   const [excelData, setExcelData] = useState(null);
