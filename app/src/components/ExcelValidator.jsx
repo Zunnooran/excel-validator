@@ -1,4 +1,5 @@
-import React,{useState,useRef } from 'react'
+import React,{useState,useRef } from 'react';
+import * as XLSX from "xlsx";
 import Swal from 'sweetalert2';
 import {
   RangeDirective,
@@ -17,7 +18,6 @@ import "../../App.css";
 
 
 const ExcelValidator = () => {
-  console.log("inside excel validator")
   const [excelData, setExcelData] = useState(null);
   const [masterExcelFile, setMasterExcelFile] = useState(null);
   const [isViewFile, setIsViewFile] = useState(false);
@@ -34,7 +34,7 @@ const ExcelValidator = () => {
       const sheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(sheet);
       setExcelData(parsedData);
-      console.log(parsedData)
+      console.log(parsedData[0])
       if (parsedData) {
         Swal.fire({
           title: "Success",
@@ -86,6 +86,7 @@ const ExcelValidator = () => {
 
   const handleValidate = async () => {
     if (excelData && masterExcelFile) {
+      console.log(excelData[0],"data")
       const columnCountMasterExcelFile = Object.keys(masterExcelFile[0]).length;
       const columnCountExcelFile = Object.keys(excelData[0]).length;
     console.log(columnCountExcelFile,columnCountMasterExcelFile)
