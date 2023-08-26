@@ -1,0 +1,33 @@
+@import url("https://cdn.syncfusion.com/ej2/bootstrap5.css");
+
+.App{
+    margin: 2%;
+   
+    height: calc(100% - 58px);
+  }
+.primary-btn{
+  color: #fff;
+  background-color: #6203fc;
+  height: 3rem;
+  width: 6rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 1rem;
+}
+.primary-btn:hover{
+  cursor: pointer;
+  background-color: #37038c;
+}
+.Secondary-btn{
+  margin-right: 2rem;
+  color: #fff;
+  background-color: #026df7;
+  height: 3rem;
+  width: 6rem;
+  border: none;
+  border-radius: 1rem;
+}
+.Secondary-btn:hover{
+  cursor: pointer;
+  background-color: #024499;
+}

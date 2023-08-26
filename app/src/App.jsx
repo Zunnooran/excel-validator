@@ -3,8 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/DashBoard";
 import NoRoute from "./pages/NoRoute";
-import AiChatBot from "./components/AiChatBot";
-
+import Validator from "./pages/Validator";
 const API_KEY = "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";
 
 const lightTheme = createTheme({
@@ -39,9 +38,16 @@ function App() {
                 />
               }
             />
-          {/* <Route path="/chat-bot" element={<ChatBot />} /> */}
-          <Route path="*" element={<NoRoute />} />
-
+            <Route
+              path="/validator"
+              element={
+                <Validator
+                currentTheme={currentTheme}
+                handleThemeToggle={handleThemeToggle}
+              />
+              }
+            />
+            <Route path="*" element={<NoRoute />} />
           </Routes>
         </Router>
       </ThemeProvider>
