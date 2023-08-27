@@ -87,55 +87,43 @@ const ExcelValidator = () => {
     }
   };
 
-  // const handleValidate = async () => {
-  //   if (excelData && masterExcelFile) {
-  //     console.log(excelData[0],"data")
 
-  //     setTimeout(async () => {
-  //       for (const normalRow of excelData) {
-  //         for (const field in normalRow) {
-  //           const fieldValue = normalRow[field];
-  //           await checkFieldInMaster(fieldValue);
-  //         }
-  //       }
-  //     }, 2000);
-
-  //   }
-  // };
   const handleValidate = async () => {
     if (excelData && masterExcelFile) {
       const excelColumns = Object.keys(excelData[0]);
       const masterColumns = Object.keys(masterExcelFile[0]);
   
-      const missingColumns = excelColumns.filter(column => !masterColumns.includes(column));
-      console.log(masterColumns)
+      const mismatchedValues = [];
+      const missingColumns = [];
+  
+      for (const column of excelColumns) {
+        if (!masterColumns.includes(column)) {
+          missingColumns.push(column);
+          continue;
+        }
+  
+        const excelColumnValues = excelData.map(row => row[column]);
+        const masterColumnValues = masterExcelFile.map(row => row[column]);
+  
+        for (let i = 0; i < excelColumnValues.length; i++) {
+          const excelValue = excelColumnValues[i];
+          if (excelValue !== undefined) {
+            const isValueFoundInMaster = masterColumnValues.includes(excelValue);
+  
+            if (!isValueFoundInMaster) {
+              mismatchedValues.push({ column, excelValue });
+            }
+          }
+        }
+      }
+  
       if (missingColumns.length > 0) {
         await Swal.fire({
-          title: "Column Mismatch",
+          title: "Column Not Found",
           icon: "error",
           html: `The following columns from the Excel file do not exist in the master file: <br><br>${missingColumns.join(', ')}`,
           confirmButtonText: "OK",
         });
-      }
-  
-      const mismatchedValues = [];
-  
-      for (const column in excelData[0]) {
-        if (excelData[0].hasOwnProperty(column)) {
-          const excelColumnValues = excelData.map(row => row[column]);
-          const masterColumnValues = masterExcelFile.map(row => row[column]);
-  
-          for (let i = 0; i < excelColumnValues.length; i++) {
-            const excelValue = excelColumnValues[i];
-            if( excelValue !== undefined){
-              const isValueFoundInMaster = masterColumnValues.includes(excelValue);
-  
-              if (!isValueFoundInMaster) {
-                mismatchedValues.push({ column, excelValue });
-              }
-            }
-          }
-        }
       }
   
       if (mismatchedValues.length === 0) {
