@@ -25,7 +25,7 @@ const ExcelValidator = () => {
     textAlign: "center",
     position: "sticky",
   };
-
+  const [selectedFileIndex, setSelectedFileIndex] = useState(null)
   const [excelData, setExcelData] = useState(null);
   const [masterExcelFile, setMasterExcelFile] = useState(null);
   const [isViewFile, setIsViewFile] = useState(false);
@@ -100,31 +100,31 @@ const ExcelValidator = () => {
     if (excelData && masterExcelFile) {
       const excelColumns = Object.keys(excelData[0]);
       const masterColumns = Object.keys(masterExcelFile[0]);
-  
+
       const mismatchedValues = [];
       const missingColumns = [];
-  
+
       for (const column of excelColumns) {
         if (!masterColumns.includes(column)) {
           missingColumns.push(column);
           continue;
         }
-  
+
         const excelColumnValues = excelData.map(row => row[column]);
         const masterColumnValues = masterExcelFile.map(row => row[column]);
-  
+
         for (let i = 0; i < excelColumnValues.length; i++) {
           const excelValue = excelColumnValues[i];
           if (excelValue !== undefined) {
             const isValueFoundInMaster = masterColumnValues.includes(excelValue);
-  
+
             if (!isValueFoundInMaster) {
               mismatchedValues.push({ column, excelValue });
             }
           }
         }
       }
-  
+
       if (missingColumns.length > 0) {
         await Swal.fire({
           title: "Column Not Found",
@@ -133,8 +133,8 @@ const ExcelValidator = () => {
           confirmButtonText: "OK",
         });
       }
-  
-      if (mismatchedValues.length === 0) {
+
+      if (mismatchedValues.length === 0 && missingColumns.length===0) {
         await Swal.fire({
           title: "Success",
           icon: "success",
@@ -150,13 +150,23 @@ const ExcelValidator = () => {
         });
       }
     }
+    if(!masterExcelFile){
+      Swal.fire({
+        title: "Error",
+        icon: "warning",
+        showCloseButton: true,
+        focusConfirm: false,
+        text: "No Master File Selected",
+      });
+    }
   };
   const handleSelectFile = (index) => {
     const selectedData = multiplefiles[index];
+    setSelectedFileIndex(index); // Set the selected index
     setExcelData(selectedData)
     console.log("Selected Data:", selectedData);
   };
-  
+
   const handelView = () => {
     if (excelData) {
       setIsViewFile(true);
@@ -209,32 +219,41 @@ const ExcelValidator = () => {
         </div>
         <hr style={{ marginTop: "1rem" }} />
         <div className="data">
-        {multiplefiles.length === 0 && (
-          <div className="files">No files uploaded yet</div>
-        )}
-        {multiplefiles.length > 0 && (
-          <div className="uploadedfiles">
-            {multiplefiles.map((data, groupIndex) => (
-              <div key={groupIndex} className="filename">
-              <p>file{groupIndex+1}</p>
-              <button className="Secondary-btn" onClick={() => handleSelectFile(groupIndex)}>Select</button>
-             
+          {multiplefiles.length === 0 && (
+            <div className="files">No files uploaded yet</div>
+          )}
+          {multiplefiles.length > 0 && (
+            <div className="uploadedfiles">
+              {multiplefiles.map((data, groupIndex) => (
+                <div key={groupIndex} className="filename">
+                  <p className="file">File {groupIndex + 1}</p>
+                  {selectedFileIndex !== groupIndex && (
+                    <button
+                      className="Secondary-btn"
+                      onClick={() => handleSelectFile(groupIndex)}
+                    >
+                      Select
+                    </button>
+                  )}
+                  {selectedFileIndex === groupIndex && (
+                    <button className="selected">Selected</button>
+                  )}
+                </div>
+              ))}
+              <div className="options">
+                <button onClick={handleValidate} className="validate-btn">
+                  Validate
+                </button>
+                <button
+                  onClick={handelView}
+                  style={{ marginLeft: "2rem", marginRight: "2rem" }}
+                  className="validate-btn"
+                >
+                  view File
+                </button>
               </div>
-            ))}
-            <div className="options">
-            <button onClick={handleValidate} className="primary-btn">
-          Validate
-        </button>
-        <button
-          onClick={handelView}
-          style={{ marginLeft: "2rem", marginRight: "2rem" }}
-          className="primary-btn"
-        >
-          view File
-        </button>
-        </div>
-          </div>
-        )}
+            </div>
+          )}
         </div>
       </div>
       {isViewFile && (

@@ -1,12 +1,12 @@
 @import url("https://cdn.syncfusion.com/ej2/bootstrap5.css");
 
-.App{
+.App {
   margin: 2%;
- 
+
   height: calc(100% - 58px);
 }
 
-.primary-btn{
+.primary-btn {
   color: #fff;
   background-color: #6203fc;
   height: 3rem;
@@ -15,11 +15,13 @@
   font-size: 1rem;
   border-radius: 1rem;
 }
-.primary-btn:hover{
+
+.primary-btn:hover {
   cursor: pointer;
   background-color: #37038c;
 }
-.Secondary-btn{
+
+.Secondary-btn {
   margin-right: 2rem;
   color: #fff;
   background-color: #026df7;
@@ -28,24 +30,56 @@
   border: none;
   border-radius: 1rem;
 }
-.Secondary-btn:hover{
+
+.Secondary-btn:hover {
   cursor: pointer;
   background-color: #024499;
 }
-.files{
+
+.files {
   display: flex;
-  justify-content: center ;
+  justify-content: center;
   align-items: center;
 }
-.filename{
+
+.filename {
   padding: 9px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.options{
+
+.options {
   margin-top: 12px;
   display: flex;
- justify-content: flex-end;
- margin-right: 20px;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.selected {
+  margin-right: 2rem;
+  color: #fff;
+  background-color: #666666;
+  height: 3rem;
+  width: 6rem;
+  border: none;
+  border-radius: 1rem;
+}
+
+.file {
+  font-size: large;
+}
+
+.validate-btn {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #90caf9;
+  height: 3rem;
+  width: 6rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 1rem;
+}
+.validate-btn:hover{
+  cursor: pointer;
+  background-color: #42a5f5;
 }
