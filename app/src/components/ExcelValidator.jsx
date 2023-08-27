@@ -18,6 +18,12 @@ import "../../App.css";
 
 
 const ExcelValidator = () => {
+  const boldCenter = {
+    fontWeight: "bold",
+    textAlign: "center",
+    position: "sticky",
+  };
+
   const [excelData, setExcelData] = useState(null);
   const [masterExcelFile, setMasterExcelFile] = useState(null);
   const [isViewFile, setIsViewFile] = useState(false);
@@ -34,7 +40,6 @@ const ExcelValidator = () => {
       const sheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(sheet);
       setExcelData(parsedData);
-      console.log(parsedData[0])
       if (parsedData) {
         Swal.fire({
           title: "Success",
@@ -46,6 +51,7 @@ const ExcelValidator = () => {
   };
 
   const handleFileUploadMaster = (e) => {
+
     const reader = new FileReader();
     reader.readAsBinaryString(e.target.files[0]);
     reader.onload = (e) => {
@@ -55,7 +61,6 @@ const ExcelValidator = () => {
       const sheet = workbook.Sheets[sheetName];
       const parsedData = XLSX.utils.sheet_to_json(sheet);
       setMasterExcelFile(parsedData);
-      console.log(parsedData)
       if (parsedData) {
         console.log("uploaded master")
         Swal.fire({
@@ -68,12 +73,10 @@ const ExcelValidator = () => {
   };
   const checkFieldInMaster = async (fieldValue) => {
     if (!masterExcelFile) {
-      console.log("Master file data is not available.");
       return;
     }
 
     const isFieldFound = masterExcelFile.some(masterRow => Object.values(masterRow).includes(fieldValue));
-    console.log(isFieldFound, "isFieldFound")
     if (!isFieldFound) {
       await Swal.fire({
         title: "Field Not Found",
@@ -84,30 +87,75 @@ const ExcelValidator = () => {
     }
   };
 
+  // const handleValidate = async () => {
+  //   if (excelData && masterExcelFile) {
+  //     console.log(excelData[0],"data")
+
+  //     setTimeout(async () => {
+  //       for (const normalRow of excelData) {
+  //         for (const field in normalRow) {
+  //           const fieldValue = normalRow[field];
+  //           await checkFieldInMaster(fieldValue);
+  //         }
+  //       }
+  //     }, 2000);
+
+  //   }
+  // };
   const handleValidate = async () => {
     if (excelData && masterExcelFile) {
-      console.log(excelData[0],"data")
-      const columnCountMasterExcelFile = Object.keys(masterExcelFile[0]).length;
-      const columnCountExcelFile = Object.keys(excelData[0]).length;
-    console.log(columnCountExcelFile,columnCountMasterExcelFile)
-      if (columnCountExcelFile !== columnCountMasterExcelFile) {
-        Swal.fire({
-          title: "Columns Not Found",
+      const excelColumns = Object.keys(excelData[0]);
+      const masterColumns = Object.keys(masterExcelFile[0]);
+  
+      const missingColumns = excelColumns.filter(column => !masterColumns.includes(column));
+      console.log(masterColumns)
+      if (missingColumns.length > 0) {
+        await Swal.fire({
+          title: "Column Mismatch",
           icon: "error",
-          text: "Number of columns in the file you uploaded are not equal to the number of columns in the master file.",
+          html: `The following columns from the Excel file do not exist in the master file: <br><br>${missingColumns.join(', ')}`,
+          confirmButtonText: "OK",
         });
       }
-      setTimeout(async () => {
-        for (const normalRow of excelData) {
-          for (const field in normalRow) {
-            const fieldValue = normalRow[field];
-            await checkFieldInMaster(fieldValue);
+  
+      const mismatchedValues = [];
+  
+      for (const column in excelData[0]) {
+        if (excelData[0].hasOwnProperty(column)) {
+          const excelColumnValues = excelData.map(row => row[column]);
+          const masterColumnValues = masterExcelFile.map(row => row[column]);
+  
+          for (let i = 0; i < excelColumnValues.length; i++) {
+            const excelValue = excelColumnValues[i];
+            if( excelValue !== undefined){
+              const isValueFoundInMaster = masterColumnValues.includes(excelValue);
+  
+              if (!isValueFoundInMaster) {
+                mismatchedValues.push({ column, excelValue });
+              }
+            }
           }
         }
-      }, 2000);
-
+      }
+  
+      if (mismatchedValues.length === 0) {
+        await Swal.fire({
+          title: "Success",
+          icon: "success",
+          text: "No mismatches found.",
+          confirmButtonText: "OK",
+        });
+      } else if (mismatchedValues.length > 0) {
+        await Swal.fire({
+          title: "Value Mismatch",
+          icon: "error",
+          html: mismatchedValues.map(item => `Column: ${item.column}<br>Excel Value: ${item.excelValue}<br><br>`).join(''),
+          confirmButtonText: "OK",
+        });
+      }
     }
   };
+  
 
   const handelView = () => {
     if (excelData) {
